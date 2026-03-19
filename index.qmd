@@ -1,0 +1,31 @@
+---
+title: "Untitled"
+format: revealjs
+editor: visual
+---
+
+```{r}
+library(dygraphs)
+library(xts)
+library(tidyverse)
+
+arg <- readRDS("Novo Informativo de Conjuntura/data/argentina.rds")
+
+inflacao <- arg %>%
+  filter(
+    variavel == "Taxa de Inflação"
+  )
+
+inf_ts <- xts(
+  x = inflacao$valor,
+  order.by = inflacao$data
+)
+
+
+dygraph(inf_ts) %>%
+  dyRangeSelector(
+    dateWindow = c(min(inflacao$data),max(inflacao$data))
+  )
+
+```
+
